@@ -1,0 +1,21 @@
+{
+  "name": "wordbook",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "db": "docker compose up -d db",
+    "dev:server": "pnpm --filter @wordbook/server dev",
+    "dev:ext": "pnpm --filter @wordbook/extension dev",
+    "build:ext": "pnpm --filter @wordbook/extension build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

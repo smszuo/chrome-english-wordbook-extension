@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My wordbook</title>
+    <meta name="manifest.open_in_tab" content="true" />
+    <style>
+      main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
+      .filters { display: grid; grid-template-columns: 2fr 1fr; gap: 0.75rem; }
+      #list { list-style: none; padding: 0; }
+      .word { border-bottom: 1px solid var(--border); padding: 0.75rem 0; }
+      .word h2 { font-size: 1.1rem; margin: 0; }
+      .word .head { justify-content: space-between; }
+      .word ol { margin: 0.25rem 0; padding-left: 1.25rem; }
+      .word textarea { min-height: 2.5rem; }
+      .sighting { margin: 0.5rem 0; }
+      .sighting blockquote { margin: 0.25rem 0 0; padding-left: 0.75rem; border-left: 3px solid var(--border); }
+      .known h2 { color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>My wordbook</h1>
+      <p id="logged-out" hidden>You are not logged in. Click the extension icon in the toolbar to log in, then reload this page.</p>
+      <div id="book" hidden>
+        <div class="filters">
+          <label>Search <input id="search" type="search" maxlength="100" /></label>
+          <label>Status
+            <select id="status">
+              <option value="">All</option>
+              <option value="learning">Learning</option>
+              <option value="known">Known</option>
+            </select>
+          </label>
+        </div>
+        <p id="count" class="muted" role="status"></p>
+        <p id="msg" class="error" role="alert"></p>
+        <ul id="list"></ul>
+        <button type="button" id="more" hidden>Load more</button>
+      </div>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

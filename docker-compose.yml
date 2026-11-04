@@ -1,0 +1,48 @@
+# Dev:  docker compose up -d db                (Postgres only, on localhost:5434)
+# Prod: docker compose --profile prod up -d --build
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wordbook
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: wordbook
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5434:5432" # localhost only; not reachable from outside the host
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wordbook"]
+      interval: 5s
+      retries: 10
+
+  app:
+    profiles: [prod]
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://wordbook:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/wordbook
+      INVITE_CODE: ${INVITE_CODE:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    # No published port: only Caddy can reach the app.
+
+  caddy:
+    profiles: [prod]
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on: [app]
+
+volumes:
+  pgdata:
+  caddy_data:

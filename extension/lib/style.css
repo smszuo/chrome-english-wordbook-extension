@@ -1,0 +1,18 @@
+/* System colors follow the user's light/dark setting and keep contrast high. */
+:root {
+  color-scheme: light dark;
+  font: 14px/1.5 system-ui, sans-serif;
+  --muted: GrayText;
+  --border: color-mix(in srgb, CanvasText 20%, transparent);
+}
+body { margin: 0; background: Canvas; color: CanvasText; }
+h1 { font-size: 1.2rem; margin: 0 0 0.75rem; }
+label { display: block; margin: 0.5rem 0; }
+input, select, textarea, button { font: inherit; }
+input, select, textarea { box-sizing: border-box; width: 100%; padding: 0.4rem; margin-top: 0.2rem; }
+button { padding: 0.35rem 0.8rem; cursor: pointer; }
+button.link { background: none; border: none; padding: 0; color: LinkText; text-decoration: underline; }
+.row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.muted { color: var(--muted); }
+.error { color: #b91c1c; }
+@media (prefers-color-scheme: dark) { .error { color: #f87171; } }
